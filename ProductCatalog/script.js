@@ -3,16 +3,17 @@ async function fetchProductCatalog() {
         const response = await fetch('https://dummyjson.com/products');
         const data = await response.json();
         // Kādi dati ir jāpadot metodē?
-        displayProductCatalog();
+        console.log(data) // Dati saņemti 
+        displayProductCatalog(data.products);
     } catch (error) {
         console.error('Error fetching product catalog:', error);
     }
 }
-
 function displayProductCatalog(products) {
     // Kā iegūt pareizo DOM elementu, kurā ievietot produktu katalogu?
-    productCatalogContainer.innerHTML = '';
-
+    const productCatalogContainer = document.getElementById('product-catalog');
+    productCatalogContainer.innerHTML = ''; 
+    
     products.forEach(product => {
         const div = document.createElement('div');
         div.classList.add('col-lg-4', 'col-md-6', 'mb-4');
@@ -35,6 +36,19 @@ function displayProductCatalog(products) {
 }
 
 function generateStars(rating) {
+
+    let stars = "";
+    let num = Math.round(rating);
+    let numEmpty = rating % 1;
+
+    for (let i = 0; i < num; i++) {
+        stars += `<span class="star">&#9733;</span>`;
+    }
+    if (numEmpty < 0.5) {
+        stars +- '<span class="star empty">&#9734;</span>';
+    }
+    return stars;
+
     // Cik zvaignes vajag kopā?
     // Kā var aprēķināt, kad vajag pilnu zvaigzni, bet kad tukšu?
 }
